@@ -1,5 +1,5 @@
 {
-  "name": "@g-loot/react-tournament-brackets",
+  "name": "@utkzhang/echelon-tournament-brackets",
   "version": "1.0.0",
   "description": "A react component to visualize bracket leaderboards",
   "module": "dist/esm/index.js",
@@ -86,7 +86,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/g-loot/react-tournament-brackets.git"
+    "url": "git+https://github.com/UTkzhang/echelon-tournament-brackets.git"
   },
   "bugs": {
     "url": "https://github.com/g-loot/react-tournament-brackets/issues"
