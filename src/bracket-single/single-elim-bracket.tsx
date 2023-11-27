@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { sortAlphanumerically } from 'Utils/string';
@@ -41,14 +42,20 @@ const SingleEliminationBracket = ({
   const { roundHeader, columnWidth, canvasPadding, rowHeight, width } =
     getCalculatedStyles(style);
 
-  const lastGame = matches.find(match => !match.nextMatchId);
+  const thirdPlaceMatch = matches.find(match => match.isThirdPlaceMatch);
+  const exhibitionMatches = matches.filter(match => match.isExhibitionMatch);
+  const mainBracketMatches = matches.filter(
+    match => match !== thirdPlaceMatch && !exhibitionMatches.includes(match)
+  );
+
+  const lastGame = mainBracketMatches.find(match => !match.nextMatchId);
 
   const generateColumn = (matchesColumn: MatchType[]): MatchType[][] => {
     const previousMatchesColumn = matchesColumn.reduce<MatchType[]>(
       (result, match) => {
         return [
           ...result,
-          ...matches
+          ...mainBracketMatches
             .filter(m => m.nextMatchId === match.id)
             .sort((a, b) => sortAlphanumerically(a.name, b.name)),
         ];
@@ -62,16 +69,28 @@ const SingleEliminationBracket = ({
     return [previousMatchesColumn];
   };
   const generate2DBracketArray = (final: MatchType) => {
-    return final
+    const brackets = final
       ? [...generateColumn([final]), [final]].filter(arr => arr.length > 0)
       : [];
+
+    // Add third place match to last column
+    if (thirdPlaceMatch) {
+      brackets[-1].push(thirdPlaceMatch);
+    }
+
+    // Add exhibition matches to first column
+    if (exhibitionMatches.length > 0) {
+      brackets[0].push(...exhibitionMatches);
+    }
+
+    return brackets;
   };
   const columns = generate2DBracketArray(lastGame);
   // [
-  //   [ First column ]
+  //   [ First column, exhibition matches [optional] ]
   //   [ 2nd column ]
   //   [ 3rd column ]
-  //   [ lastGame ]
+  //   [ lastGame, thirdPlaceMatch [optional]]
   // ]
 
   const { gameWidth, gameHeight, startPosition } = calculateSVGDimensions(

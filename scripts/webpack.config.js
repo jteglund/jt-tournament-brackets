@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const aliases = require('./aliases');
 
 const ROOT_DIR = path.resolve(__dirname, '../');
-const SRC_DIR = path.resolve(ROOT_DIR, 'src');
 const buildDir = 'dist';
 const BUILD_DIR = path.resolve(ROOT_DIR, buildDir);
 

@@ -36,6 +36,10 @@ export type MatchType = {
 
   participants: ParticipantType[];
 
+  isThirdPlaceMatch?: boolean;
+
+  isExhibitionMatch?: boolean;
+
   [key: string]: any;
 };
 

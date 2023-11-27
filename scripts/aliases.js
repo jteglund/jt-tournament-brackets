@@ -1,5 +1,6 @@
 const {
   compilerOptions: { paths: unprocessAliases },
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 } = require(`../tsconfig.node.json`);
 
 const aliases = Object.keys(unprocessAliases).reduce((obj, alias) => {
