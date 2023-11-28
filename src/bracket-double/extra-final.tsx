@@ -3,7 +3,7 @@ import MatchWrapper from 'Core/match-wrapper';
 import { calculatePositionOfFinalGame } from './calculate-match-position';
 import Connectors from './extra-final-connectors';
 
-const ExtraFinal = ({
+function ExtraFinal({
   match,
   rowIndex,
   columnIndex,
@@ -19,7 +19,7 @@ const ExtraFinal = ({
   numOfLowerRounds,
   upperBracketHeight,
   lowerBracketHeight,
-}) => {
+}) {
   const { canvasPadding, columnWidth, rowHeight, roundHeader } =
     calculatedStyles;
   const { x, y } = calculatePositionOfFinalGame(rowIndex, columnIndex, {
@@ -73,6 +73,6 @@ const ExtraFinal = ({
       </g>
     </>
   );
-};
+}
 
 export default ExtraFinal;

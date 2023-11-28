@@ -57,7 +57,7 @@ function findTheFinals(matches: { upper: MatchType[]; lower: MatchType[] }): {
 
   return { convergingMatch, finalsArray };
 }
-const DoubleEliminationBracket = ({
+function DoubleEliminationBracket({
   matches,
   matchComponent,
   currentRound,
@@ -68,7 +68,7 @@ const DoubleEliminationBracket = ({
   options: { style: inputStyle } = {
     style: defaultStyle,
   },
-}: DoubleElimLeaderboardProps) => {
+}: DoubleElimLeaderboardProps) {
   const style = {
     ...defaultStyle,
     ...inputStyle,
@@ -258,6 +258,6 @@ const DoubleEliminationBracket = ({
       </SvgWrapper>
     </ThemeProvider>
   );
-};
+}
 
 export default DoubleEliminationBracket;

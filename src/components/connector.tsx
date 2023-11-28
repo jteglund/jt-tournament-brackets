@@ -2,13 +2,13 @@ import useMatchHighlightContext from 'Hooks/use-match-highlight';
 import React from 'react';
 import { getCalculatedStyles } from '../settings';
 
-const Connector = ({
+function Connector({
   bracketSnippet,
   previousBottomMatchPosition = null,
   previousTopMatchPosition = null,
   currentMatchPosition,
   style,
-}) => {
+}) {
   const {
     boxHeight,
     connectorColor,
@@ -83,5 +83,5 @@ const Connector = ({
       {bottomHighlighted && <use href={`connector-${x}-${y}-${1}`} />}
     </>
   );
-};
+}
 export default Connector;

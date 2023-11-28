@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { INITIAL_VALUE, ReactSVGPanZoom, TOOL_AUTO } from 'react-svg-pan-zoom';
 import { precisionRound } from 'Utils/numbers';
 
-const SvgViewer = ({
+function SvgViewer({
   height = 500,
   width = 500,
   bracketWidth,
@@ -12,7 +12,7 @@ const SvgViewer = ({
   scaleFactor = 1.1,
   customToolbar = null,
   ...rest
-}) => {
+}) {
   const Viewer = useRef(null);
   const [tool, setTool] = useState(TOOL_AUTO);
   const [value, setValue] = useState(INITIAL_VALUE);
@@ -63,5 +63,5 @@ const SvgViewer = ({
       {children}
     </ReactSVGPanZoom>
   );
-};
+}
 export default SvgViewer;

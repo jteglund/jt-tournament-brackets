@@ -3,7 +3,7 @@ import Connector from 'Components/connector';
 import { getCalculatedStyles } from '../settings';
 import { calculatePositionOfFinalGame } from './calculate-match-position';
 
-const FinalConnectors = ({
+function FinalConnectors({
   rowIndex,
   columnIndex,
 
@@ -14,7 +14,7 @@ const FinalConnectors = ({
   lowerBracketHeight,
   upperBracketHeight,
   gameHeight,
-}) => {
+}) {
   const { columnWidth, rowHeight, canvasPadding } = getCalculatedStyles(style);
 
   const currentMatchPosition = calculatePositionOfFinalGame(
@@ -53,6 +53,6 @@ const FinalConnectors = ({
       style={style}
     />
   );
-};
+}
 
 export default FinalConnectors;

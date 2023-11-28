@@ -4,13 +4,13 @@ import Connectors from 'Components/connector';
 import { getCalculatedStyles } from '../settings';
 import { calculatePositionOfMatchLowerBracket } from './calculate-match-position';
 
-const ConnectorsLower = ({
+function ConnectorsLower({
   bracketSnippet,
   rowIndex,
   columnIndex,
   style,
   offsetY = 0,
-}) => {
+}) {
   const { columnWidth, rowHeight, canvasPadding } = getCalculatedStyles(style);
 
   const isUpperSeedingRound = columnIndex % 2 !== 0;
@@ -60,6 +60,6 @@ const ConnectorsLower = ({
       style={style}
     />
   );
-};
+}
 
 export default ConnectorsLower;

@@ -9,7 +9,7 @@ const initialState = {
 const store = createContext(initialState);
 const { Provider } = store;
 
-const MatchContextProvider = ({ children }) => {
+function MatchContextProvider({ children }) {
   const [state, dispatch] = useReducer((previousState, action) => {
     switch (action.type) {
       case 'SET_HOVERED_PARTYID': {
@@ -29,6 +29,6 @@ const MatchContextProvider = ({ children }) => {
   }, initialState);
 
   return <Provider value={{ state, dispatch }}>{children}</Provider>;
-};
+}
 
 export { store as matchContext, MatchContextProvider };

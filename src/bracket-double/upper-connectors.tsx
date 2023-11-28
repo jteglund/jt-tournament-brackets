@@ -7,14 +7,14 @@ import {
   calculatePositionOfMatchLowerBracket,
 } from './calculate-match-position';
 
-const ConnectorsUpper = ({
+function ConnectorsUpper({
   bracketSnippet,
   rowIndex,
   columnIndex,
   style,
   offsetY = 0,
   isLowerBracket = false,
-}) => {
+}) {
   const { columnWidth, rowHeight, canvasPadding } = getCalculatedStyles(style);
 
   const isUpperSeedingRound = isLowerBracket && columnIndex % 2 !== 0;
@@ -58,6 +58,6 @@ const ConnectorsUpper = ({
       style={style}
     />
   );
-};
+}
 
 export default ConnectorsUpper;
