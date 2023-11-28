@@ -50,6 +50,7 @@ const SingleEliminationBracket = ({
 
   const lastGame = mainBracketMatches.find(match => !match.nextMatchId);
 
+
   const generateColumn = (matchesColumn: MatchType[]): MatchType[][] => {
     const previousMatchesColumn = matchesColumn.reduce<MatchType[]>(
       (result, match) => {
@@ -75,7 +76,7 @@ const SingleEliminationBracket = ({
 
     // Add third place match to last column
     if (thirdPlaceMatch) {
-      brackets[-1].push(thirdPlaceMatch);
+      brackets[brackets.length - 1].push(thirdPlaceMatch);
     }
 
     // Add exhibition matches to first column
@@ -120,7 +121,7 @@ const SingleEliminationBracket = ({
               {columns.map((matchesColumn, columnIndex) =>
                 matchesColumn.map((match, rowIndex) => {
                   const { x, y } = calculatePositionOfMatch(
-                    rowIndex,
+                    match.isThirdPlaceMatch ? rowIndex / 2 : rowIndex,
                     columnIndex,
                     {
                       canvasPadding,
@@ -149,22 +150,24 @@ const SingleEliminationBracket = ({
                           columnIndex={columnIndex}
                         />
                       )}
-                      {columnIndex !== 0 && (
-                        <Connectors
-                          {...{
-                            bracketSnippet: {
-                              currentMatch: match,
-                              previousTopMatch,
-                              previousBottomMatch,
-                            },
-                            rowIndex,
-                            columnIndex,
-                            gameHeight,
-                            gameWidth,
-                            style,
-                          }}
-                        />
-                      )}
+                      {columnIndex !== 0 &&
+                        !match.isExhibitionMatch &&
+                        !match.isThirdPlaceMatch && (
+                          <Connectors
+                            {...{
+                              bracketSnippet: {
+                                currentMatch: match,
+                                previousTopMatch,
+                                previousBottomMatch,
+                              },
+                              rowIndex,
+                              columnIndex,
+                              gameHeight,
+                              gameWidth,
+                              style,
+                            }}
+                          />
+                        )}
                       <g>
                         <MatchWrapper
                           x={x}

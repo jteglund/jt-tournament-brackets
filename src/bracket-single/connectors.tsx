@@ -1,5 +1,5 @@
+/* eslint-disable react/function-component-definition */
 import React from 'react';
-
 import Connector from 'Components/connector';
 import { getCalculatedStyles } from '../settings';
 import { calculatePositionOfMatch } from './calculate-match-position';

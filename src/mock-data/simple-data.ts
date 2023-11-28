@@ -319,6 +319,66 @@ export const walkOverData: MatchType[] = [
 
 export const simpleSmallBracket: MatchType[] = [
   {
+    id: 10001,
+    name: 'Third-Place',
+    nextMatchId: null,
+    nextLooserMatchId: null,
+    tournamentRoundText: '3',
+    startTime: '2021-05-31',
+    state: 'DONE',
+    isThirdPlaceMatch: true,
+    participants: [
+      {
+        id: '354506c4-d07d-4785-9759-755941a6cccc',
+        resultText: null,
+        isWinner: false,
+        status: null,
+        name: 'TestTeam1234',
+        picture: null,
+      },
+    ],
+  },
+  {
+    id: 10002,
+    name: 'Exhibition',
+    nextMatchId: null,
+    nextLooserMatchId: null,
+    tournamentRoundText: '1',
+    startTime: '2021-05-31',
+    state: 'DONE',
+    isExhibitionMatch: true,
+    participants: [
+      {
+        id: '354506c4-d07d-4785-9759-755941a6cccc',
+        resultText: null,
+        isWinner: false,
+        status: null,
+        name: 'TestTeam1234',
+        picture: null,
+      },
+    ],
+  },
+  {
+    id: 10003,
+    name: 'Exhibition 2',
+    nextMatchId: null,
+    nextLooserMatchId: null,
+    tournamentRoundText: '1',
+    startTime: '2021-05-31',
+    state: 'DONE',
+    isExhibitionMatch: true,
+    participants: [
+      {
+        id: '354506c4-d07d-4785-9759-755941a6cccc',
+        resultText: null,
+        isWinner: false,
+        status: null,
+        name: 'TestTeam1234',
+        picture: null,
+      },
+    ],
+  },
+  {
     id: 19753,
     nextMatchId: null,
     tournamentRoundText: '3',
