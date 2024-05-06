@@ -3,7 +3,7 @@ import React from 'react';
 
 import Match from 'Components/match';
 import SwissBracket from './swiss-bracket';
-import { simpleBracket } from '../mock-data/simple-data';
+import { simpleSmallSwiss } from '../mock-data/swiss-data';
 
 export default {
   title: 'Components/Bracket',
@@ -21,6 +21,6 @@ function Template({ ...args }) {
 
 export const SwissSmallBracket = Template.bind({});
 SwissSmallBracket.args = {
-  matches: simpleBracket,
+  matches: simpleSmallSwiss,
   matchComponent: Match,
 };

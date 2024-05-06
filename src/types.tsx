@@ -26,6 +26,8 @@ export type MatchType = {
 
   nextMatchId: number | string | null;
 
+  swissRoundNumber?: number; // Used only for swiss to keep track of which column (rather than nextMatchId)
+
   nextLooserMatchId?: number | string;
 
   tournamentRoundText?: string;

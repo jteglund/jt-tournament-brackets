@@ -1,12 +1,11 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { sortAlphanumerically } from 'Utils/string';
 import { calculateSVGDimensions } from 'Core/calculate-svg-dimensions';
 import { MatchContextProvider } from 'Core/match-context';
 import MatchWrapper from 'Core/match-wrapper';
 import RoundHeader from 'Components/round-header';
 import { getPreviousMatches } from 'Core/match-functions';
-import { MatchType, SwissLeaderboardProps } from '../types';
+import { SwissLeaderboardProps } from '../types';
 import { defaultStyle, getCalculatedStyles } from '../settings';
 import { calculatePositionOfMatch } from './calculate-match-position';
 import defaultTheme from '../themes/themes';
@@ -39,56 +38,18 @@ function SwissBracket({
   const { roundHeader, columnWidth, canvasPadding, rowHeight, width } =
     getCalculatedStyles(style);
 
-  const thirdPlaceMatch = matches.find(match => match.isThirdPlaceMatch);
-  const exhibitionMatches = matches.filter(match => match.isExhibitionMatch);
-  const mainBracketMatches = matches.filter(
-    match => match !== thirdPlaceMatch && !exhibitionMatches.includes(match)
-  );
+  const generate2DBracketArray = () => {
+    const brackets = [];
+    matches.forEach(match => {
+      if (!brackets[match.swissRoundNumber]) {
+        brackets[match.swissRoundNumber] = [];
+      }
+      brackets[match.swissRoundNumber].push(match);
+    });
 
-  const lastGame = mainBracketMatches.find(match => !match.nextMatchId);
-
-  const generateColumn = (matchesColumn: MatchType[]): MatchType[][] => {
-    const previousMatchesColumn = matchesColumn.reduce<MatchType[]>(
-      (result, match) => {
-        return [
-          ...result,
-          ...mainBracketMatches
-            .filter(m => m.nextMatchId === match.id)
-            .sort((a, b) => sortAlphanumerically(a.name, b.name)),
-        ];
-      },
-      []
-    );
-
-    if (previousMatchesColumn.length > 0) {
-      return [...generateColumn(previousMatchesColumn), previousMatchesColumn];
-    }
-    return [previousMatchesColumn];
+    return brackets.filter(column => !!column);
   };
-  const generate2DBracketArray = (final: MatchType) => {
-    const brackets = final
-      ? [...generateColumn([final]), [final]].filter(arr => arr.length > 0)
-      : [];
-
-    // Add third place match to last column
-    if (thirdPlaceMatch) {
-      brackets[brackets.length - 1].push(thirdPlaceMatch);
-    }
-
-    // Add exhibition matches to first column
-    if (exhibitionMatches.length > 0) {
-      brackets[0].push(...exhibitionMatches);
-    }
-
-    return brackets;
-  };
-  const columns = generate2DBracketArray(lastGame);
-  // [
-  //   [ First column, exhibition matches [optional] ]
-  //   [ 2nd column ]
-  //   [ 3rd column ]
-  //   [ lastGame, thirdPlaceMatch [optional]]
-  // ]
+  const columns = generate2DBracketArray();
 
   const { gameWidth, gameHeight, startPosition } = calculateSVGDimensions(
     columns[0].length,
@@ -117,9 +78,7 @@ function SwissBracket({
               {columns.map((matchesColumn, columnIndex) =>
                 matchesColumn.map((match, rowIndex) => {
                   const { x, y } = calculatePositionOfMatch(
-                    match.isThirdPlaceMatch
-                      ? rowIndex / (columnIndex * 2)
-                      : rowIndex,
+                    rowIndex,
                     columnIndex,
                     {
                       canvasPadding,
