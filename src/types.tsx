@@ -218,6 +218,10 @@ export type BracketLeaderboardProps = CommonTreeProps & {
   onPartyClick?: (party: ParticipantType, partyWon: boolean) => void;
 };
 
+export type SwissLeaderboardProps = BracketLeaderboardProps & {
+  matches: MatchType[];
+};
+
 export type SingleElimLeaderboardProps = BracketLeaderboardProps & {
   matches: MatchType[];
 };

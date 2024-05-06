@@ -6,14 +6,12 @@ import { MatchContextProvider } from 'Core/match-context';
 import MatchWrapper from 'Core/match-wrapper';
 import RoundHeader from 'Components/round-header';
 import { getPreviousMatches } from 'Core/match-functions';
-import { MatchType, SingleElimLeaderboardProps } from '../types';
+import { MatchType, SwissLeaderboardProps } from '../types';
 import { defaultStyle, getCalculatedStyles } from '../settings';
 import { calculatePositionOfMatch } from './calculate-match-position';
-
-import Connectors from './connectors';
 import defaultTheme from '../themes/themes';
 
-function SingleEliminationBracket({
+function SwissBracket({
   matches,
   matchComponent,
   currentRound,
@@ -24,7 +22,7 @@ function SingleEliminationBracket({
   options: { style: inputStyle } = {
     style: defaultStyle,
   },
-}: SingleElimLeaderboardProps) {
+}: SwissLeaderboardProps) {
   const style = {
     ...defaultStyle,
     ...inputStyle,
@@ -77,18 +75,9 @@ function SingleEliminationBracket({
       brackets[brackets.length - 1].push(thirdPlaceMatch);
     }
 
-    // Add exhibition matches to their respective column
+    // Add exhibition matches to first column
     if (exhibitionMatches.length > 0) {
-      const tournamentRoundTexts = brackets.map(
-        column => column[0].tournamentRoundText
-      );
-
-      exhibitionMatches.forEach(match => {
-        const columnNumber =
-          tournamentRoundTexts.indexOf(match.tournamentRoundText) ?? 0;
-
-        brackets[columnNumber].push(match);
-      });
+      brackets[0].push(...exhibitionMatches);
     }
 
     return brackets;
@@ -96,9 +85,9 @@ function SingleEliminationBracket({
   const columns = generate2DBracketArray(lastGame);
   // [
   //   [ First column, exhibition matches [optional] ]
-  //   [ 2nd column, exhibition matches [optional] ]
-  //   [ 3rd column, exhibition matches [optional] ]
-  //   [ lastGame, thirdPlaceMatch [optional] ]
+  //   [ 2nd column ]
+  //   [ 3rd column ]
+  //   [ lastGame, thirdPlaceMatch [optional]]
   // ]
 
   const { gameWidth, gameHeight, startPosition } = calculateSVGDimensions(
@@ -127,32 +116,24 @@ function SingleEliminationBracket({
             <g>
               {columns.map((matchesColumn, columnIndex) =>
                 matchesColumn.map((match, rowIndex) => {
-                  let offsetY = 0;
-                  if (match.isThirdPlaceMatch) {
-                    offsetY = -(2 ** columnIndex) * rowHeight;
-                  } else if (match.isExhibitionMatch) {
-                    offsetY =
-                      -(2 ** columnIndex - 2) * (rowHeight / 2) - rowHeight / 2;
-                  }
-
                   const { x, y } = calculatePositionOfMatch(
-                    rowIndex,
+                    match.isThirdPlaceMatch
+                      ? rowIndex / (columnIndex * 2)
+                      : rowIndex,
                     columnIndex,
                     {
                       canvasPadding,
                       columnWidth,
                       rowHeight,
-                      offsetY,
                     }
                   );
                   const previousBottomPosition = (rowIndex + 1) * 2 - 1;
 
-                  const { previousTopMatch, previousBottomMatch } =
-                    getPreviousMatches(
-                      columnIndex,
-                      columns,
-                      previousBottomPosition
-                    );
+                  const { previousBottomMatch } = getPreviousMatches(
+                    columnIndex,
+                    columns,
+                    previousBottomPosition
+                  );
                   return (
                     <g key={x + y}>
                       {roundHeader.isShown && (
@@ -166,24 +147,6 @@ function SingleEliminationBracket({
                           columnIndex={columnIndex}
                         />
                       )}
-                      {columnIndex !== 0 &&
-                        !match.isExhibitionMatch &&
-                        !match.isThirdPlaceMatch && (
-                          <Connectors
-                            {...{
-                              bracketSnippet: {
-                                currentMatch: match,
-                                previousTopMatch,
-                                previousBottomMatch,
-                              },
-                              rowIndex,
-                              columnIndex,
-                              gameHeight,
-                              gameWidth,
-                              style,
-                            }}
-                          />
-                        )}
                       <g>
                         <MatchWrapper
                           x={x}
@@ -218,4 +181,4 @@ function SingleEliminationBracket({
   );
 }
 
-export default SingleEliminationBracket;
+export default SwissBracket;
