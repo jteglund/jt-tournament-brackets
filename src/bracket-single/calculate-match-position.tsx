@@ -28,6 +28,7 @@ export const calculatePositionOfMatch = (
     rowIndex,
     columnIndex,
   });
+
   return {
     x: columnIndex * columnWidth + canvasPadding + offsetX,
     y: result + canvasPadding + offsetY,

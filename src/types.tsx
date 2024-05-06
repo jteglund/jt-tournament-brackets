@@ -26,6 +26,8 @@ export type MatchType = {
 
   nextMatchId: number | string | null;
 
+  swissRoundNumber?: number; // Used only for swiss to keep track of which column (rather than nextMatchId)
+
   nextLooserMatchId?: number | string;
 
   tournamentRoundText?: string;
@@ -216,6 +218,10 @@ export type BracketLeaderboardProps = CommonTreeProps & {
   }) => void;
 
   onPartyClick?: (party: ParticipantType, partyWon: boolean) => void;
+};
+
+export type SwissLeaderboardProps = BracketLeaderboardProps & {
+  matches: MatchType[];
 };
 
 export type SingleElimLeaderboardProps = BracketLeaderboardProps & {

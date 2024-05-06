@@ -363,7 +363,7 @@ export const simpleSmallBracket: MatchType[] = [
     name: 'Exhibition 2',
     nextMatchId: null,
     nextLooserMatchId: null,
-    tournamentRoundText: '1',
+    tournamentRoundText: '2',
     startTime: '2021-05-31',
     state: 'DONE',
     isExhibitionMatch: true,

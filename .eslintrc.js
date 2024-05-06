@@ -94,6 +94,7 @@ module.exports = {
         ],
       },
     ],
+    'function-component-definition': ['off'],
   },
   settings: {
     'import/resolver': {

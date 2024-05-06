@@ -8,7 +8,6 @@ function Match({
   rowIndex,
   columnIndex,
   match,
-
   previousBottomMatch = null,
   teams,
   topText,
