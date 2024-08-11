@@ -101,8 +101,14 @@ function SingleEliminationBracket({
   //   [ lastGame, thirdPlaceMatch [optional] ]
   // ]
 
+  const columnsWithExhibitionMatcheLength = columns.some(column =>
+    column.some(match => match.isExhibitionMatch)
+  )
+    ? columns[0].length + 1
+    : columns[0].length;
+
   const { gameWidth, gameHeight, startPosition } = calculateSVGDimensions(
-    columns[0].length,
+    columnsWithExhibitionMatcheLength,
     columns.length,
     rowHeight,
     columnWidth,
@@ -129,7 +135,7 @@ function SingleEliminationBracket({
                 matchesColumn.map((match, rowIndex) => {
                   let offsetY = 0;
                   if (match.isThirdPlaceMatch) {
-                    offsetY = -(2 ** columnIndex) * rowHeight;
+                    offsetY = -rowHeight * (2 ** columnIndex - 1);
                   } else if (match.isExhibitionMatch) {
                     offsetY =
                       -(2 ** columnIndex - 2) * (rowHeight / 2) - rowHeight / 2;
@@ -145,6 +151,7 @@ function SingleEliminationBracket({
                       offsetY,
                     }
                   );
+
                   const previousBottomPosition = (rowIndex + 1) * 2 - 1;
 
                   const { previousTopMatch, previousBottomMatch } =
